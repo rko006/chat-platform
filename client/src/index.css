@@ -1,0 +1,123 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-bg: #ffffff;
+    --color-surface: #f8fafc;
+    --color-surface-2: #f1f5f9;
+    --color-border: #e2e8f0;
+    --color-text: #0f172a;
+    --color-text-muted: #64748b;
+    --color-brand: #6366f1;
+    --scrollbar-thumb: #cbd5e1;
+  }
+
+  .dark {
+    --color-bg: #0f172a;
+    --color-surface: #1e293b;
+    --color-surface-2: #334155;
+    --color-border: #334155;
+    --color-text: #f8fafc;
+    --color-text-muted: #94a3b8;
+    --color-brand: #818cf8;
+    --scrollbar-thumb: #475569;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+  @apply font-sans antialiased;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  overflow-y: auto; /* ✅ FIXED */
+}
+
+  ::selection {
+    @apply bg-brand-200 text-brand-900;
+  }
+}
+
+@layer components {
+  /* Scrollbar */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-thumb) transparent;
+  }
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 4px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbar-thumb);
+    border-radius: 2px;
+  }
+
+  /* Message bubbles */
+  .bubble-sent {
+    @apply bg-brand-500 text-white rounded-2xl rounded-br-sm;
+  }
+  .bubble-received {
+    @apply bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 rounded-2xl rounded-bl-sm shadow-sm;
+  }
+
+  /* Input focus ring */
+  .input-ring {
+    @apply focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-0;
+  }
+
+  /* Glass morphism */
+  .glass {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  /* Skeleton loader */
+  .skeleton {
+    @apply animate-pulse bg-slate-200 dark:bg-slate-700 rounded;
+  }
+
+  /* Online indicator */
+  .online-dot {
+    @apply w-2.5 h-2.5 bg-emerald-400 rounded-full ring-2 ring-white dark:ring-slate-800;
+  }
+
+  /* Transition defaults */
+  .transition-default {
+    @apply transition-all duration-200 ease-in-out;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .no-select {
+    user-select: none;
+    -webkit-user-select: none;
+  }
+}
+
+/* Audio player */
+audio {
+  display: none;
+}
+
+/* Emoji picker override */
+em-emoji-picker {
+  --border-radius: 12px;
+  --shadow: 0 20px 60px rgba(0,0,0,0.15);
+}

@@ -1,0 +1,36 @@
+version: '3.9'
+
+# Development override — mounts source, enables hot reload
+services:
+  server:
+    build:
+      target: builder
+    command: npm run dev
+    environment:
+      NODE_ENV: development
+      MONGODB_URI: mongodb://${MONGO_ROOT_USER:-admin}:${MONGO_ROOT_PASSWORD:-changeme}@mongodb:27017/chatplatform?authSource=admin
+    volumes:
+      - ./server/src:/app/src:delegated
+      - ./server/package.json:/app/package.json
+      - /app/node_modules
+    ports:
+      - "5000:5000"
+      - "9229:9229"  # Node.js debug port
+
+  client:
+    build:
+      target: builder
+    command: npm run dev -- --host
+    volumes:
+      - ./client/src:/app/src:delegated
+      - ./client/public:/app/public
+      - /app/node_modules
+    ports:
+      - "3000:3000"
+    environment:
+      VITE_API_URL: http://localhost:5000/api
+      VITE_SOCKET_URL: http://localhost:5000
+
+  # Include MinIO in dev
+  minio:
+    profiles: []  # Enable in dev
